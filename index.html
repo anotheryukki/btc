@@ -104,26 +104,6 @@
     mix-blend-mode:overlay;
   }
 
-  .ledger{
-    position:fixed;
-    inset:0;
-    z-index:1;
-    pointer-events:none;
-    opacity:0.5;
-  }
-
-  .sigil{
-    filter:drop-shadow(0 2px 10px rgba(0,0,0,0.6));
-  }
-  .sigil-spin{
-    animation:spin 200s linear infinite;
-    transform-origin:50px 50px;
-  }
-  @keyframes spin{
-    from{transform:rotate(0deg);}
-    to{transform:rotate(360deg);}
-  }
-
   .content{
     position:relative;
     z-index:5;
@@ -242,20 +222,6 @@
     background:linear-gradient(to left, var(--bone-40), transparent);
   }
 
-  .inscription-row{
-    display:flex;
-    align-items:baseline;
-    gap:10px;
-    font-size:10px;
-    letter-spacing:0.16em;
-    text-transform:uppercase;
-    color:var(--bone-40);
-  }
-  .inscription-row .num{
-    color:var(--bone-60);
-    font-weight:500;
-  }
-
   @keyframes blink{
     0%,49%{opacity:1;}
     50%,100%{opacity:0;}
@@ -263,15 +229,23 @@
 
   .foot{
     position:absolute;
-    right:clamp(20px,5.2vw,80px);
-    bottom:clamp(18px,3.4vh,34px);
-    max-width:46ch;
+    right:clamp(120px,15vw,230px);
+    bottom:clamp(20px,3.6vh,36px);
+    max-width:min(40ch, 56vw);
     text-align:right;
     font-size:10px;
-    line-height:1.75;
+    line-height:1.7;
     letter-spacing:0.02em;
     color:var(--bone-40);
     text-shadow:0 1px 2px rgba(0,0,0,0.8);
+  }
+  .foot::before{
+    content:"";
+    display:block;
+    margin:0 0 14px auto;
+    width:36px;
+    height:1px;
+    background:linear-gradient(to left, var(--bone-40), transparent);
   }
 
   .ca-mobile{ display:none; }
@@ -343,6 +317,10 @@
       bottom:clamp(14px,2.6vh,22px);
       font-size:9px;
     }
+    .foot::before{
+      margin:0 auto 12px;
+      background:linear-gradient(to right, transparent, var(--bone-40), transparent);
+    }
     .foot.reveal{animation-name:reveal-foot-m;}
     @keyframes reveal-foot-m{
       from{opacity:0; transform:translate(-50%,10px);}
@@ -380,23 +358,6 @@
     <rect width="100%" height="100%" filter="url(#noise)"></rect>
   </svg>
 
-  <svg class="ledger" width="100%" height="100%" aria-hidden="true">
-    <defs>
-      <pattern id="hexgrid" width="64" height="55.4" patternUnits="userSpaceOnUse" patternTransform="translate(0,0)">
-        <path d="M16,0 L48,0 L64,27.7 L48,55.4 L16,55.4 L0,27.7 Z" fill="none" stroke="rgba(187,148,80,0.5)" stroke-width="0.5"/>
-      </pattern>
-      <radialGradient id="ledgerFade" cx="72%" cy="30%" r="60%">
-        <stop offset="0%" stop-color="white" stop-opacity="0.9"/>
-        <stop offset="55%" stop-color="white" stop-opacity="0.25"/>
-        <stop offset="100%" stop-color="white" stop-opacity="0"/>
-      </radialGradient>
-      <mask id="ledgerMask">
-        <rect width="100%" height="100%" fill="url(#ledgerFade)"/>
-      </mask>
-    </defs>
-    <rect width="100%" height="100%" fill="url(#hexgrid)" mask="url(#ledgerMask)"/>
-  </svg>
-
   <div class="content">
 
     <div class="topbar reveal" style="animation-delay:0.2s;">
@@ -407,50 +368,19 @@
     </div>
 
     <div class="hero reveal" style="animation-delay:0.35s;">
-      <svg class="sigil" width="58" height="58" viewBox="0 0 100 100" style="margin-bottom:14px;" aria-hidden="true">
-        <g class="sigil-spin">
-          <circle cx="50" cy="50" r="46" fill="none" stroke="rgba(187,148,80,0.5)" stroke-width="0.6"/>
-          <circle cx="50" cy="50" r="40" fill="none" stroke="rgba(187,148,80,0.28)" stroke-width="0.4"/>
-          <g stroke="rgba(187,148,80,0.4)" stroke-width="0.6">
-            <line x1="50" y1="4" x2="50" y2="14"/>
-            <line x1="50" y1="86" x2="50" y2="96"/>
-            <line x1="4" y1="50" x2="14" y2="50"/>
-            <line x1="86" y1="50" x2="96" y2="50"/>
-            <line x1="18" y1="18" x2="25" y2="25"/>
-            <line x1="75" y1="75" x2="82" y2="82"/>
-            <line x1="82" y1="18" x2="75" y2="25"/>
-            <line x1="25" y1="75" x2="18" y2="82"/>
-          </g>
-        </g>
-        <g fill="none" stroke-linecap="round">
-          <line x1="47" y1="27" x2="47" y2="30" stroke="var(--crimson)" stroke-width="3.4"/>
-          <line x1="47" y1="70" x2="47" y2="73" stroke="var(--crimson)" stroke-width="3.4"/>
-          <path d="M37,27 L37,73" stroke="var(--bone)" stroke-width="5.6"/>
-          <path d="M37,27 C58,27 60,48 39,49" stroke="var(--bone)" stroke-width="5.6"/>
-          <path d="M39,49 C63,49 65,73 37,73" stroke="var(--bone)" stroke-width="5.6"/>
-        </g>
-      </svg>
       <h1 class="wordmark font-black"><span class="sym">$</span>BTC</h1>
       <p class="tagline">Enter of your own free will</p>
       <div class="ca">
-        <div class="inscription-row">
-          <span>Inscription №</span>
-          <span class="num">000,001</span>
-        </div>
-        <span class="ca-line"></span>
         <span class="mono-label" style="font-size:10px;">Contract address</span>
         <span class="ca-value">Soon<span class="cursor"></span></span>
+        <span class="ca-line"></span>
       </div>
     </div>
 
     <div class="ca ca-mobile reveal" style="animation-delay:0.5s;">
-      <div class="inscription-row">
-        <span>Inscription №</span>
-        <span class="num">000,001</span>
-      </div>
-      <span class="ca-line"></span>
       <span class="mono-label" style="font-size:10px;">Contract address</span>
       <span class="ca-value">Soon<span class="cursor"></span></span>
+      <span class="ca-line"></span>
     </div>
 
     <p class="foot reveal" style="animation-delay:0.6s;">
